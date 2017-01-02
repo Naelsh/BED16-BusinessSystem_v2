@@ -13,18 +13,7 @@ namespace BED16_BusinessSystem_v2
 
         }
 
-        // function for checking viability of user input, only validates on a single character
-        public static bool CheckIfProperUserInput(string allowedInput, char input)
-        {
-            foreach (char character in allowedInput)
-            {
-                if (character == input)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+
 
         public static void ShowMainMenu()
         {
@@ -52,37 +41,45 @@ namespace BED16_BusinessSystem_v2
                     itemSelection = userInput[0];
                 }
             } while (!isProperUserInput);
+            Console.Clear();
             switch (itemSelection)
             {
                 case '1':
                     // creates a new product
-                    Product newProduct = Product.userInput();
-
+                    bool wantToCreateProducts = true;
+                    do
+                    {
+                        Product newProduct = Product.userInput();
+                        wantToCreateProducts = CheckIfUserWantToContinue();
+                    } while (wantToCreateProducts);
+                    ShowMainMenu();
                     break;
                 case '2':
-                    ShowChangeProductPriceMenu();
+                    // Show Change Product Price
                     
                     break;
                 case '3':
-                    ShowChangeAmountInInventoryMenu();
+                    // Show Change Amount In Inventory
                     break;
                 case '4':
-                    ShowRegisterNewCustomerMenu();
+                    // Show Register New Customer
                     break;
                 case '5':
-                    ShowCreateNewOrderMenu();
+                    // Show Create New Order
                     break;
                 case '6':
-                    ShowChangeOrderMenu();
+                    // Show Change Order
                     break;
                 case '7':
-                    ShowListAllOrderMenu();
+                    // Show List All Order
                     break;
                 case '8':
-                    ShowCancelOrderMenu();
+                    // Show Cancel Order
                     break;
                 case '9':
-                    TerminateProgram();
+                    // TerminateProgram
+                    Console.WriteLine("Thank you for your visit! Have a great day");
+                    Console.ReadLine();
                     break;
                 default:
                     break;
@@ -90,63 +87,39 @@ namespace BED16_BusinessSystem_v2
 
         }
 
-        public static void ShowChangeProductPriceMenu()
+        // make sure the user want to continue
+        public static bool CheckIfUserWantToContinue()
         {
-            Console.Clear();
-            Console.WriteLine("You have selected option 2. to change the price of a product");
-            Console.WriteLine("Write the number of the product which price you want to change: ");
-            // MyStore.ListProducts();
-            // MyStore.editProduct(Int32.Parse(Console.ReadLine()), 1);
+            Console.WriteLine("Do you want to do the same process again? (y/n) If 'n' is typed, you will return to" 
+                +" the main menu.");
+            bool isProperUserInput = false;
+            string userInput = "";
+            do
+            {
+                Console.Write("Please write 'y' or 'n' ");
+                userInput = Console.ReadLine().ToString().ToUpper();
+                isProperUserInput = CheckIfProperUserInput("YN", userInput[0]);
+            } while (!isProperUserInput);
+
+            if (userInput[0] == 'Y')
+            {
+                return true;
+            }
+            return false;
         }
 
-        public static void ShowChangeAmountInInventoryMenu()
+        // function for checking viability of user input, only validates on a single character
+        public static bool CheckIfProperUserInput(string allowedInput, char input)
         {
-            Console.Clear();
-            Console.WriteLine("You have selected option 3. to change amount of a product in the inventory");
-            Console.WriteLine("Write the number of the product which quantity you want to change: ");
-            //MyStore.ListProducts();
-            //MyStore.editProduct(Int32.Parse(Console.ReadLine()), 2);
+            foreach (char character in allowedInput)
+            {
+                if (character == input)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public static void ShowRegisterNewCustomerMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("You have selected option 4. to register a new customer");
-            Console.ReadLine();
-        }
-
-        public static void ShowCreateNewOrderMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("You have selected option 5. to create a new order for a customer");
-            Console.ReadLine();
-        }
-
-        public static void ShowChangeOrderMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("You have selected option 6. to change an order");
-            Console.ReadLine();
-        }
-
-        public static void ShowListAllOrderMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("You have selected option 7. to list all orders by a customer");
-            Console.ReadLine();
-        }
-
-        public static void ShowCancelOrderMenu()
-        {
-            Console.Clear();
-            Console.WriteLine("You have selected option 8. to cancel an order");
-            Console.ReadLine();
-        }
-
-        public static void TerminateProgram()
-        {
-            Console.WriteLine("Thanks for the visit!");
-            Console.ReadLine();
-        }
     }
 }

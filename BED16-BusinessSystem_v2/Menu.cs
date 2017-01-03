@@ -31,7 +31,7 @@ namespace BED16_BusinessSystem_v2
                                 + "\n9. to quit");
 
             Console.Write("Select an option by entering the corresponding menu number ");
-            List < string > allowedUserInput= new List<string>();
+            List <string> allowedUserInput= new List<string>();
             for (int menuRow = 1; menuRow <= 9; menuRow++)
             {
                 allowedUserInput.Add(menuRow.ToString());
@@ -73,12 +73,19 @@ namespace BED16_BusinessSystem_v2
 
                 case "5":
                     // Show Create New Order
+                    bool wantToCreateOrder = true;
+                    do
+                    {
+                        Order.AddNewOrder();
+                        wantToCreateProducts = CheckIfUserWantToContinue();
+                    } while (wantToCreateOrder);
+                    ShowMainMenu(myStore, myCustomerDB);
                     break;
                 case "6":
                     // Show Change Order
                     break;
                 case "7":
-                    // Show List All Order
+                    // Show List of All Orders based on customer
                     break;
                 case "8":
                     // Show Cancel Order

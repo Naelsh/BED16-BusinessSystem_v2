@@ -20,14 +20,14 @@ namespace BED16_BusinessSystem_v2
         {
             Console.Clear();
             Console.WriteLine("Welcome to order management of Group 4"
-                                + "\n1. to add a product to the store"
-                                + "\n2. to change the price of a product"
-                                + "\n3. to change amount of a product in the inventory"
-                                + "\n4. to register a new customer"
-                                + "\n5. to create a new order for a customer"
-                                + "\n6. to change an order"
-                                + "\n7. to list all orders by a customer"
-                                + "\n8. to cancel an order"
+                                + "\n1. Product - to add a product to the store"
+                                + "\n2. Product - to change the price of a product"
+                                + "\n3. Product - to change amount of a product in the inventory"
+                                + "\n4. Customer - to register a new customer"
+                                + "\n5. Order - to create a new order for a customer"
+                                + "\n6. Order - to change an order"
+                                + "\n7. Order - to list all orders by a customer"
+                                + "\n8. Order - to cancel an order"
                                 + "\n9. to quit");
 
             Console.Write("Select an option by entering the corresponding menu number ");
@@ -46,15 +46,42 @@ namespace BED16_BusinessSystem_v2
                     bool wantToCreateProducts = true;
                     do
                     {
-                        Product newProduct = Product.userInput();
+                        Product newProduct = Product.userInput(); // creates the product
+                        myStore.AddProduct(newProduct); // adds product to the store
+
+                        Console.WriteLine("-------Current List of Products-------"); // temporary debugging code
+                        myStore.ListProducts(); // temporary debugging code
+                        Console.WriteLine("--------------------------------------"); // temporary debugging code
+                        
                         wantToCreateProducts = CheckIfUserWantToContinue();
                     } while (wantToCreateProducts);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
 
                 case "2":
-                    // Show Change Product Price
+                    // Change price
+                    // first list all available products
+                    Console.WriteLine("-------Current List of Products-------");
+                    myStore.ListProducts();
+                    Console.WriteLine("--------------------------------------");
+                    // ask for which product ID that should be changed.
+                    Console.WriteLine("Which product do you want to change? Enter the full Product ID#");
+                    // set up a list of all products present
+
+                    /*
+                    List<string> products = new List<string>();
+                    foreach (var product in myStore)
+                    {
+                        products.Add(product.)
+                    }
+                    string userSpecifiedProductID = CheckIfProperUserInput();
+                    */
+
+                    // check if product exist in the store, continue until user enters a correct product
+                    // or want to return to main menu
+                    // if it does, ask for a new price and update the correct product
                     
+
                     break;
                 case "3":
                     // Show Change Amount In Inventory
@@ -64,8 +91,13 @@ namespace BED16_BusinessSystem_v2
                     bool wantToCreateCustomer = true;
                     do
                     {
-                        myCustomerDB.AddCustomer();
+                        Customer newCustomer = myCustomerDB.AddCustomer();
+                        myCustomerDB.AddToCustomerDB(newCustomer);
+
+                        Console.WriteLine("-------Current List of Customers-------"); // temporary debugging code
                         myCustomerDB.ListCustomers(); // temporary debugging code
+                        Console.WriteLine("---------------------------------------"); // temporary debugging code
+
                         wantToCreateCustomer = CheckIfUserWantToContinue();
                     } while (wantToCreateCustomer);
                     ShowMainMenu(myStore, myCustomerDB);

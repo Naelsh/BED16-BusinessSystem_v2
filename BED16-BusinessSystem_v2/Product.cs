@@ -37,7 +37,6 @@ namespace BED16_BusinessSystem_v2
             return "Type of Product: " + this.type + "\nQuantity: " + this.quantity + " Price: " + this.price +
                  "\nProduct ID#: " + this.productID;
         }
-
         
         public static Product userInput()
         {
@@ -73,6 +72,7 @@ namespace BED16_BusinessSystem_v2
                     productPrice = Double.Parse(Menu.CheckIfProperUserInput(allowedInput));
                     isProperDoubleInput = true;
                     productID = typeOfProduct.Substring(0, 2) + productIDCount.ToString("D2");
+                    productIDCount++;
                 }
                 catch (Exception e)
                 {

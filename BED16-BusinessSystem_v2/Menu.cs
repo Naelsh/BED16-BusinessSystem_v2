@@ -20,14 +20,14 @@ namespace BED16_BusinessSystem_v2
         {
             Console.Clear();
             Console.WriteLine("Welcome to order management of Group 4"
-                                + "\n1. Product - to add a product to the store"
-                                + "\n2. Product - to change the price of a product"
-                                + "\n3. Product - to change amount of a product in the inventory"
-                                + "\n4. Customer - to register a new customer"
-                                + "\n5. Order - to create a new order for a customer"
-                                + "\n6. Order - to change an order"
-                                + "\n7. Order - to list all orders by a customer"
-                                + "\n8. Order - to cancel an order"
+                                + "\n1. Product - Add a product to the store"
+                                + "\n2. Product - Change the price of a product"
+                                + "\n3. Product - Change amount of a product in the inventory"
+                                + "\n4. Customer - Register a new customer"
+                                + "\n5. Order - Create a new order for a customer"
+                                + "\n6. Order - Change an order"
+                                + "\n7. Order - List all orders by a customer"
+                                + "\n8. Order - Cancel an order"
                                 + "\n9. to quit");
 
             Console.Write("Select an option by entering the corresponding menu number ");

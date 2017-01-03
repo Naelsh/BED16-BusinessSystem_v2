@@ -153,6 +153,20 @@ namespace BED16_BusinessSystem_v2
             return noOfProductsInInventory;
         }
 
+        public void ListProductPrices()
+        {
+            List<double> pricelist = new List<double>();
+            for (int i = 0; i < wareHouse.Length; i++)
+            {
+                if (wareHouse[i] != null)
+                {
+                    pricelist.Add(wareHouse[i].price);
+                }
+                else
+                {
+                }
+            }
+        }
 
 
     }

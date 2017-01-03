@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,23 +30,18 @@ namespace BED16_BusinessSystem_v2
                                 + "\n8. to cancel an order"
                                 + "\n9. to quit");
 
-            bool isProperUserInput = false;
-            char itemSelection = '4';
-            do
+            Console.Write("Select an option by entering the corresponding menu number ");
+            List < string > allowedUserInput= new List<string>();
+            for (int menuRow = 1; menuRow <= 9; menuRow++)
             {
-                Console.Write("Select an option by entering the corresponding menu number ");
-                string userInput = Console.ReadLine().ToString();
-                isProperUserInput = CheckIfProperUserInput("1234", userInput[0]);
-                if (isProperUserInput)
-                {
-                    itemSelection = userInput[0];
-                }
-            } while (!isProperUserInput);
+                allowedUserInput.Add(menuRow.ToString());
+            }
+            string userInput = CheckIfProperUserInput(allowedUserInput);
 
             Console.Clear();
-            switch (itemSelection)
+            switch (userInput)
             {
-                case '1':
+                case "1":
                     // creates a new product
                     bool wantToCreateProducts = true;
                     do
@@ -55,29 +51,39 @@ namespace BED16_BusinessSystem_v2
                     } while (wantToCreateProducts);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
-                case '2':
+
+                case "2":
                     // Show Change Product Price
                     
                     break;
-                case '3':
+                case "3":
                     // Show Change Amount In Inventory
                     break;
-                case '4':
+                case "4":
                     // Show Register New Customer
+                    bool wantToCreateCustomer = true;
+                    do
+                    {
+                        myCustomerDB.AddCustomer();
+                        wantToCreateCustomer = CheckIfUserWantToContinue();
+                    } while (wantToCreateCustomer);
+                    Debug.WriteLine(myCustomerDB.ToString());
+                    ShowMainMenu(myStore, myCustomerDB);
                     break;
-                case '5':
+
+                case "5":
                     // Show Create New Order
                     break;
-                case '6':
+                case "6":
                     // Show Change Order
                     break;
-                case '7':
+                case "7":
                     // Show List All Order
                     break;
-                case '8':
+                case "8":
                     // Show Cancel Order
                     break;
-                case '9':
+                case "9":
                     // TerminateProgram
                     Console.WriteLine("Thank you for your visit! Have a great day");
                     Console.ReadLine();
@@ -91,18 +97,14 @@ namespace BED16_BusinessSystem_v2
         // make sure the user want to continue
         public static bool CheckIfUserWantToContinue()
         {
-            Console.WriteLine("Do you want to do the same process again? (y/n) If 'n' is typed, you will return to" 
-                +" the main menu.");
-            bool isProperUserInput = false;
-            string userInput = "";
-            do
-            {
-                Console.Write("Please write 'y' or 'n' ");
-                userInput = Console.ReadLine().ToString().ToUpper();
-                isProperUserInput = CheckIfProperUserInput("YN", userInput[0]);
-            } while (!isProperUserInput);
-
-            if (userInput[0] == 'Y')
+            Console.WriteLine("Do you want to do the same process again? (y/n) Press 'y' to go again."
+                + "If 'n' is typed, you will return to the main menu.");
+            List<string> allowedInput = new List<string>();
+            allowedInput.Add("Y");
+            allowedInput.Add("N");
+            string userInput = CheckIfProperUserInput(allowedInput);
+            
+            if (userInput == "Y")
             {
                 return true;
             }
@@ -110,16 +112,41 @@ namespace BED16_BusinessSystem_v2
         }
 
         // function for checking viability of user input, only validates on a single character
-        public static bool CheckIfProperUserInput(string allowedInput, char input)
+        public static string CheckIfProperUserInput(List<string> allowedInputs)
         {
-            foreach (char character in allowedInput)
+            bool hasAtLeastOneCharacter = false;
+            bool isProperUserInput = false;
+            string userInput;
+
+            foreach (var allowdInput in allowedInputs)
             {
-                if (character == input)
-                {
-                    return true;
-                }
+                allowdInput.ToUpper();
             }
-            return false;
+
+            do
+            {
+                userInput = Console.ReadLine().ToString().ToUpper();
+                if (userInput.Length > 0)
+                {
+                    hasAtLeastOneCharacter = true;
+                }
+                else
+                {
+                    Console.WriteLine("Input requires at least one character");
+                }
+                foreach (var allowedInput in allowedInputs)
+                {
+                    if (allowedInput == userInput)
+                    {
+                        isProperUserInput = true;
+                    }
+                }
+                if (!isProperUserInput)
+                {
+                    Console.WriteLine("Input has to match one of the options");
+                }
+            } while (!hasAtLeastOneCharacter || !isProperUserInput);
+            return userInput;
         }
 
     }

@@ -109,6 +109,7 @@ namespace BED16_BusinessSystem_v2
                     do
                     {
                         Order.AddNewOrder();
+                        
                         wantToCreateProducts = CheckIfUserWantToContinue();
                     } while (wantToCreateOrder);
                     ShowMainMenu(myStore, myCustomerDB);
@@ -117,7 +118,18 @@ namespace BED16_BusinessSystem_v2
                     // Show Change Order
                     break;
                 case "7":
+                    Order order = new Order();
+
+                    bool wantToCancleOrder = true;
+                    do
+                    {
+                        order.CancleOrder();
+                        wantToCreateProducts = CheckIfUserWantToContinue();
+                    } while (wantToCancleOrder);
+                    ShowMainMenu(myStore, myCustomerDB);
+
                     // Show List of All Orders based on customer
+                    ShowMainMenu(myStore, myCustomerDB);
                     break;
                 case "8":
                     // Show Cancel Order

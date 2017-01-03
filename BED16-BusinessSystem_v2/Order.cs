@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,7 @@ namespace BED16_BusinessSystem_v2
             allowedUserInput.Add("Y");
             allowedUserInput.Add("N");
             string userInput = Menu.CheckIfProperUserInput(allowedUserInput);
+            
             if (userInput == "Y")
             {
                 Console.WriteLine("This feature is not yet implemented");
@@ -96,5 +98,66 @@ namespace BED16_BusinessSystem_v2
             Order tempOrder = new Order();
             return tempOrder; // ugly solution, this creates an empty order if no order was found
         }
+
+        //Cancel a order
+
+        public void CancleOrder()
+        {
+           
+            int orderNrInput=0;
+            Console.WriteLine("Please write the order number representing the order you want to cancel: ");
+            ListAllOrders();
+
+            List<string> allowedInput = new List<string>();
+
+            bool isProperDoubleInput = false;
+           
+            do
+            {
+                try
+                {
+                    orderNrInput = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                    
+                    isProperDoubleInput = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Input not eglible, please try again! ");
+                    Debug.WriteLine("Error when new price of a Product was entered " + e.Message);
+                }
+            } while (!isProperDoubleInput);
+
+            bool IsNotOrderNrFound = true;
+
+
+            //Checks if the given order nr was found
+
+            foreach (var order in orders)
+            {
+                if (order.OrderNumber == orderNrInput && order.IsActive)
+                {
+                    order.IsActive = false;
+                    Console.WriteLine("Order: " + orderNrInput + " have been canceled!");
+                    IsNotOrderNrFound = false;
+                }
+                
+            }
+
+            if (IsNotOrderNrFound)
+            {
+                Console.WriteLine("No order by given order number was found!");
+            }
+
+            Console.WriteLine("Please press any key to continue...");
+            Console.ReadKey();
+            
+            
+        }
+
+
     }
-}
+
+
+
+    }
+

@@ -48,13 +48,14 @@ namespace BED16_BusinessSystem_v2
         // class Customer handles adding a customer do customer DB by user input 
         public Customer AddCustomer()
         {
+            List<string> allowedInput = new List<string>(); // everything is allowed, so the list is empty
             Console.WriteLine("*Adding a customer to customer DB*");
             Console.WriteLine("Enter customer first name");
-            string firstName = Console.ReadLine().ToUpper();
+            string firstName = Menu.CheckIfProperUserInput(allowedInput);
             Console.WriteLine("Enter customer last name ");
-            string lastName = Console.ReadLine().ToUpper();
+            string lastName = Menu.CheckIfProperUserInput(allowedInput);
             Console.WriteLine("Enter customer email");
-            string email = Console.ReadLine().ToUpper();
+            string email = Menu.CheckIfProperUserInput(allowedInput);
 
             Customer newcustomer = new Customer(firstName, lastName, email);
             return newcustomer;

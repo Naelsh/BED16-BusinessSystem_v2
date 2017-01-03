@@ -65,9 +65,9 @@ namespace BED16_BusinessSystem_v2
                     do
                     {
                         myCustomerDB.AddCustomer();
+                        myCustomerDB.ListCustomers(); // temporary debugging code
                         wantToCreateCustomer = CheckIfUserWantToContinue();
                     } while (wantToCreateCustomer);
-                    Debug.WriteLine(myCustomerDB.ToString());
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
 
@@ -117,7 +117,10 @@ namespace BED16_BusinessSystem_v2
             bool hasAtLeastOneCharacter = false;
             bool isProperUserInput = false;
             string userInput;
-
+            if (allowedInputs.Count == 0)
+            {
+                isProperUserInput = true;
+            }
             foreach (var allowdInput in allowedInputs)
             {
                 allowdInput.ToUpper();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,21 +41,47 @@ namespace BED16_BusinessSystem_v2
         
         public static Product userInput()
         {
-            string typeOfProduct, productID;
-            int productQuantity;
-            double productPrice;
+            string typeOfProduct, productID = "";
+            int productQuantity = 0;
+            double productPrice = 0.0;
+            List<string> allowedInput = new List<string>();
 
             Console.WriteLine("Please write what type of product do you want to add: ");
-            typeOfProduct = Console.ReadLine().ToUpper();
+            typeOfProduct = Menu.CheckIfProperUserInput(allowedInput);
+
             Console.WriteLine("How many products you have in store: ");
-            productQuantity = Int16.Parse(Console.ReadLine());
+            bool isProperIntInput = false;
+            do
+            {
+                try
+                {
+                    productQuantity = Int16.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                    isProperIntInput = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error when number of Products entered " +e.Message);
+                }
+            } while (!isProperIntInput);
+
+            bool isProperDoubleInput = false;
             Console.WriteLine("What does your product cost: ");
-            productPrice = Double.Parse(Console.ReadLine());
-            productID = typeOfProduct.Substring(0, 2) + productIDCount.ToString("D2");
+            do
+            {
+                try
+                {
+                    productPrice = Double.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                    isProperDoubleInput = true;
+                    productID = typeOfProduct.Substring(0, 2) + productIDCount.ToString("D2");
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error when number of Products entered " + e.Message);
+                }
+            } while (!isProperDoubleInput);
 
             Product userProduct = new Product(typeOfProduct, productQuantity, productPrice, productID);
-
-
+            
             return userProduct;
         }
 

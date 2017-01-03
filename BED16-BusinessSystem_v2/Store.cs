@@ -168,6 +168,101 @@ namespace BED16_BusinessSystem_v2
             }
         }
 
-
+        public void ChangeProduct()
+        {
+            int menuChoice = 0;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("*Changing product price or amount in iventory*");
+                Console.WriteLine("Enter number"
+                                    + "\n1. to enter a product art nr to change"
+                                    + "\n2. search for a product to change"
+                                    + "\n3. Go back to main menu");
+                string userInput = Console.ReadLine();
+                if (int.TryParse(userInput, out menuChoice))
+                {
+                    switch (menuChoice)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter product art nr");
+                            string artnr = Console.ReadLine().ToUpper();
+                            Console.ReadKey();
+                            break;
+                        case 2:
+                            int noOfProducts = 0;
+                            for (int i = 0; i < data.Length; i++)
+                            {
+                                if (data[i] == null)
+                                {
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Prod " + i + " " + (data[i].ToString()));
+                                    noOfProducts++;
+                                }
+                            }
+                            if (noOfProducts == 0)
+                            {
+                                Console.WriteLine("No products have been added to your store");
+                            }
+                            Console.WriteLine("Enter # of the product to change price for or q to go back");
+                            int chosenProduct = 0;
+                            bool change = false;
+                            do
+                            {
+                                string chosenLine = Console.ReadLine();
+                                if (int.TryParse(chosenLine, out chosenProduct) && (chosenProduct < noOfProducts))
+                                {
+                                    change = true;
+                                    Console.WriteLine("Current price of art number is " + data[chosenProduct].Price);
+                                    Console.WriteLine("Enter new price");
+                                    float price = 0;
+                                    do
+                                    {
+                                        string enteredPrice = Console.ReadLine();
+                                        if (float.TryParse(enteredPrice, out price))
+                                        {
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Please enter price in numbers");
+                                        }
+                                    }
+                                    while (price <= 0);
+                                    data[chosenProduct].Price = price;
+                                    Console.WriteLine("The price has been updated");
+                                }
+                                else if (chosenLine == "q")
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please enter # of product to change or q to go back");
+                                }
+                            }
+                            while (change == false);
+                            Console.ReadKey();
+                            break;
+                        case 3:
+                            break;
+                        default:
+                            Console.WriteLine("Enter a number between 1 and 3");
+                            Console.ReadKey();
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please, enter a number");
+                    Console.ReadKey();
+                }
+            }
+            while (menuChoice != 3);
+        }
     }
+
+
+}
 }

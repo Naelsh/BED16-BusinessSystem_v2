@@ -46,7 +46,7 @@ namespace BED16_BusinessSystem_v2
             double productPrice = 0.0;
             List<string> allowedInput = new List<string>();
 
-            Console.WriteLine("Please write what type of product do you want to add: ");
+            Console.WriteLine("Please write what type of product you want to add: ");
             typeOfProduct = Menu.CheckIfProperUserInput(allowedInput);
 
             Console.WriteLine("How many products you have in store: ");

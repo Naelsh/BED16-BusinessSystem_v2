@@ -15,7 +15,7 @@ namespace BED16_BusinessSystem_v2
 
 
 
-        public static void ShowMainMenu()
+        public static void ShowMainMenu(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
         {
             Console.Clear();
             Console.WriteLine("Welcome to order management of Group 4"
@@ -41,6 +41,7 @@ namespace BED16_BusinessSystem_v2
                     itemSelection = userInput[0];
                 }
             } while (!isProperUserInput);
+
             Console.Clear();
             switch (itemSelection)
             {
@@ -52,7 +53,7 @@ namespace BED16_BusinessSystem_v2
                         Product newProduct = Product.userInput();
                         wantToCreateProducts = CheckIfUserWantToContinue();
                     } while (wantToCreateProducts);
-                    ShowMainMenu();
+                    ShowMainMenu(myStore, myCustomerDB);
                     break;
                 case '2':
                     // Show Change Product Price

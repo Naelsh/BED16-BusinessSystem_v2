@@ -10,14 +10,15 @@ namespace BED16_BusinessSystem_v2
     {
         static void Main(string[] args)
         {
-            Menu.ShowMainMenu();
-            
+            Store<Product> myStore = new Store<Product>();
+            CustomerDatabase<Customer> myCustomerDB = new CustomerDatabase<Customer>();
+            Product produkt1 = new Product("printer", 14, 1000, "PR001");
+            myStore.AddProduct(produkt1);
+            Menu.ShowMainMenu(myStore, myCustomerDB);
         }
 
         static int checkInt(int userInput)
         {
-
-
             return userInput;
         }
     }

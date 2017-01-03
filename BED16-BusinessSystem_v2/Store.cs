@@ -136,6 +136,23 @@ namespace BED16_BusinessSystem_v2
 
         }
 
+        public int AmountOfProductInInventory(string artnr)
+        {
+            int noOfProductsInInventory = 0;
+            for (int i = 0; i < wareHouse.Length; i++)
+            {
+                if (wareHouse[i] != null && wareHouse[i].productID == artnr)
+                {
+                    Console.WriteLine(wareHouse[i].productID);
+                    noOfProductsInInventory = wareHouse[i].quantity;
+                }
+                else
+                {
+                }
+            }
+            return noOfProductsInInventory;
+        }
+
 
 
     }

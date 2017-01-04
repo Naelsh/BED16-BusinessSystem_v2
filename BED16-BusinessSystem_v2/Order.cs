@@ -101,7 +101,7 @@ namespace BED16_BusinessSystem_v2
 
         //Cancel a order
 
-        public void CancleOrder()
+        public void CancelOrder()
         {
            
             int orderNrInput=0;

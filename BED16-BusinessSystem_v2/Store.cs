@@ -58,6 +58,11 @@ namespace BED16_BusinessSystem_v2
 
         }
 
+        public Product GetProduct(int listNr)
+        {
+            return wareHouse[listNr];
+        }
+
 
         public void ListProducts()
         {

@@ -23,17 +23,6 @@ namespace BED16_BusinessSystem_v2
             orders.Add(this);
         }
 
-        // constructor for when you know the customer
-        public Order(Customer customer)
-        {
-            this.Customer = customer;
-            this.OrderNumber = numberOfOrders;
-            numberOfOrders++;
-            this.IsActive = true;
-            this.IsDelivered = false;
-            orders.Add(this);
-        }
-
         public static void AddNewOrder(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
         {
             Console.WriteLine("Do you have a customer that you want to create an order to directly? (y/n)");
@@ -41,8 +30,8 @@ namespace BED16_BusinessSystem_v2
             allowedUserInput.Add("Y");
             allowedUserInput.Add("N");
             string userInput = Menu.CheckIfProperUserInput(allowedUserInput);
-            
 
+            Order newOrder = new Order();
 
             if (userInput == "Y")
             {
@@ -52,14 +41,49 @@ namespace BED16_BusinessSystem_v2
             }
             else
             {
-                Order newOrder = new Order();
+                
                 Console.WriteLine("New order has been created. Order number: " + newOrder.OrderNumber);
             }
+
+            Console.WriteLine("Next step is to add articles to your order. Press any key to continue");
+            Console.ReadKey();
+            AddProductToOrder(newOrder, myStore);
         }
 
-        private static void AddArticleToOrder(Order order)
+        private static void AddProductToOrder(Order order, Store<Product> myStore)
         {
-            Console.WriteLine("");
+            // first list all available products
+            Console.Clear();
+            Console.WriteLine("-------Current List of Products-------");
+            myStore.ListProducts();
+            Console.WriteLine("--------------------------------------");
+
+            // ask for which product ID that should be added to the order.
+            Console.WriteLine("Which product do you want to add? Enter the row number based on above list");
+            int listNumber = 1;
+            List<string> allowedInput = new List<string>();
+            bool isProperIntInput = false;
+            bool wantToAddProduct = true;
+            do
+            {
+                do
+                {
+                    try
+                    {
+                        listNumber = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                        isProperIntInput = true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                        Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
+                    }
+                } while (!isProperIntInput);
+                order.Products.Add(myStore.GetProduct((listNumber - 1)));
+
+                wantToAddProduct = Menu.CheckIfUserWantToContinue();
+            } while (wantToAddProduct);
+            
         }
             
 

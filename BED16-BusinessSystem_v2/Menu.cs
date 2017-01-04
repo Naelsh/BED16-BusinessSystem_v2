@@ -151,7 +151,7 @@ namespace BED16_BusinessSystem_v2
                     bool wantToCreateOrder = true;
                     do
                     {
-                        Order.AddNewOrder();
+                        Order.AddNewOrder(myStore, myCustomerDB);
                         
                         wantToCreateProducts = CheckIfUserWantToContinue();
                     } while (wantToCreateOrder);
@@ -159,9 +159,12 @@ namespace BED16_BusinessSystem_v2
                     break;
                 case "6":
                     // Show Change Order
+                    Console.WriteLine("This feature has not yet been implemented. Press any key to continue..");
+                    ShowMainMenu(myStore, myCustomerDB);
                     break;
                 case "7":
                     // Show List of All Orders based on customer
+                    Console.WriteLine("This feature has not yet been implemented. Press any key to continue..");
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
                 case "8":

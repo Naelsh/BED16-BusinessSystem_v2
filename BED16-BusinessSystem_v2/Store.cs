@@ -105,7 +105,7 @@ namespace BED16_BusinessSystem_v2
                     {
                         try
                         {
-                            product.price = Double.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                            product.Price = Double.Parse(Menu.CheckIfProperUserInput(allowedInput));
                             isProperDoubleInput = true;
                         }
                         catch (Exception e)
@@ -129,7 +129,7 @@ namespace BED16_BusinessSystem_v2
                     {
                         try
                         {
-                            product.quantity = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                            product.Quantity = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
                             isProperIntInput = true;
                         }
                         catch (Exception e)
@@ -175,10 +175,10 @@ namespace BED16_BusinessSystem_v2
             int noOfProductsInInventory = 0;
             for (int i = 0; i < wareHouse.Length; i++)
             {
-                if (wareHouse[i] != null && wareHouse[i].productID == artnr)
+                if (wareHouse[i] != null && wareHouse[i].ProductID == artnr)
                 {
-                    Console.WriteLine(wareHouse[i].productID);
-                    noOfProductsInInventory = wareHouse[i].quantity;
+                    Console.WriteLine(wareHouse[i].ProductID);
+                    noOfProductsInInventory = wareHouse[i].Quantity;
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace BED16_BusinessSystem_v2
             {
                 if (wareHouse[i] != null)
                 {
-                    pricelist.Add(wareHouse[i].price);
+                    pricelist.Add(wareHouse[i].Price);
                 }
                 else
                 {

@@ -25,31 +25,51 @@ namespace BED16_BusinessSystem_v2
 
         public static void AddNewOrder(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
         {
-            Console.WriteLine("Do you have a customer that you want to create an order to directly? (y/n)");
+            Console.WriteLine("You will follow a form adding all data in sections. First of is adding a customer if one is "
+                + "prepared. Next is adding the products you want in your order."
+                + " The final step is defining how many of each product that should be present on each product-row\n");
+            Console.WriteLine("Do you have a customer that you want to att to order now? (y/n)");
             List<string> allowedUserInput = new List<string>();
             allowedUserInput.Add("Y");
             allowedUserInput.Add("N");
             string userInput = Menu.CheckIfProperUserInput(allowedUserInput);
 
             Order newOrder = new Order();
+            Console.WriteLine("New order has been created. Order number: " + newOrder.OrderNumber);
 
             if (userInput == "Y")
             {
                 myCustomerDB.ListCustomers();
-                Console.WriteLine("\nChoose one of the customers in the list above");
-
-            }
-            else
-            {
-                
-                Console.WriteLine("New order has been created. Order number: " + newOrder.OrderNumber);
+                Console.WriteLine("\nChoose one of the customers in the list above by entering the appropriate number");
+                int listNumber = 1;
+                List<string> allowedInput = new List<string>();
+                bool isProperIntInput = false;
+                do
+                {
+                    try
+                    {
+                        listNumber = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                        isProperIntInput = true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                        Debug.WriteLine("Error when list number of a Customer was entered " + e.Message);
+                    }
+                } while (!isProperIntInput);
+                newOrder.Customer = myCustomerDB.GetCustomer(listNumber);
             }
 
             Console.WriteLine("Next step is to add articles to your order. Press any key to continue");
             Console.ReadKey();
             AddProductToOrder(newOrder, myStore);
+
+            Console.WriteLine("The next step is to set the amount of each article in your order. Press any key to continue");
+            Console.ReadKey();
+
         }
 
+        // by taking in the order and the current list of all products in the store adding the product to the order
         private static void AddProductToOrder(Order order, Store<Product> myStore)
         {
             // first list all available products
@@ -79,11 +99,40 @@ namespace BED16_BusinessSystem_v2
                         Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
                     }
                 } while (!isProperIntInput);
-                order.Products.Add(myStore.GetProduct((listNumber - 1)));
+                Product selectedProduct = myStore.GetProduct((listNumber - 1));
+                Console.WriteLine("The following product has been added to your order:\n" + selectedProduct.ToString());
+                order.Products.Add(selectedProduct);
 
                 wantToAddProduct = Menu.CheckIfUserWantToContinue();
             } while (wantToAddProduct);
             
+        }
+
+        private static void AddQuantityForProducts(Order order)
+        {
+            foreach (Product product in order.Products)
+            {
+                Console.WriteLine("For article:\n" + product.ToString());
+                Console.WriteLine("Please enter amount to be sold");
+                int quantity = 1;
+                List<string> allowedInput = new List<string>();
+                bool isProperIntInput = false;
+                do
+                {
+                    try
+                    {
+                        quantity = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                        isProperIntInput = true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                        Debug.WriteLine("Error when list number of a Customer was entered " + e.Message);
+                    }
+                } while (!isProperIntInput);
+                Console.WriteLine("Added: " + quantity + " to the product");
+                order.quantity.Add(quantity);
+            }
         }
             
 
@@ -92,7 +141,8 @@ namespace BED16_BusinessSystem_v2
         public bool IsActive { get; set; }
         public int OrderNumber { get; private set; }
         public Customer Customer { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } // list of all products
+        public List<int> quantity { get; set; } // list of all quantities of products. Is in direct correlation to the products list
 
         public override string ToString()
         {

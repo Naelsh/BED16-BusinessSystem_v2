@@ -37,6 +37,11 @@ namespace BED16_BusinessSystem_v2
                 customerData[Count++] = item;
         }
 
+        public Customer GetCustomer(int listNr)
+        {
+            return customerData[listNr];
+        }
+
         public IEnumerator GetEnumerator()
         {
             for (int i = 0; i < Count; i++)

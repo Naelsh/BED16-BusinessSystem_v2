@@ -11,10 +11,10 @@ namespace BED16_BusinessSystem_v2
     class Product
     {
 
-        public string type { get; set; }  //variable describing type of product
-        public int quantity { get; set; } //variable describing quantity of product in stock
-        public double price { get; set; } //variable describing the price of the product
-        public string productID { get; set; }
+        public string Type { get; set; }  //variable describing type of product
+        public int Quantity { get; set; } //variable describing quantity of product in stock
+        public double Price { get; set; } //variable describing the price of the product
+        public string ProductID { get; set; }
         static int productIDCount = 0;
 
         //ProductClass constructor
@@ -23,10 +23,10 @@ namespace BED16_BusinessSystem_v2
 
         public Product(string userType, int userQuantity, double userPrice, string userProductID)
         {
-            this.type = userType;
-            this.quantity = userQuantity;
-            this.price = userPrice;
-            this.productID = userProductID;
+            this.Type = userType;
+            this.Quantity = userQuantity;
+            this.Price = userPrice;
+            this.ProductID = userProductID;
 
         }
 
@@ -34,8 +34,8 @@ namespace BED16_BusinessSystem_v2
         {
 
 
-            return "Type of Product: " + this.type + "\nQuantity: " + this.quantity + " Price: " + this.price +
-                 "\nProduct ID#: " + this.productID;
+            return "Type of Product: " + this.Type + "\nQuantity: " + this.Quantity + " Price: " + this.Price +
+                 "\nProduct ID#: " + this.ProductID;
         }
         
         public static Product userInput()

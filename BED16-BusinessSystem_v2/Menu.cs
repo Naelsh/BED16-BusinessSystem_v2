@@ -89,7 +89,7 @@ namespace BED16_BusinessSystem_v2
                         } while (!isProperIntInput);
                         myStore.editProduct(listNumber, 1); // 1 = price for editing
 
-                        wantToCreateProducts = CheckIfUserWantToContinue();
+                        wantToChangePrice = CheckIfUserWantToContinue();
                     } while (wantToChangePrice);
                     ShowMainMenu(myStore, myCustomerDB);
 
@@ -124,9 +124,10 @@ namespace BED16_BusinessSystem_v2
                                 Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
                             }
                         } while (!isProperIntInput);
+
                         myStore.editProduct(listNumber, 2); // 2 = amount for editing
 
-                        wantToCreateProducts = CheckIfUserWantToContinue();
+                        wantToChangeAmount = CheckIfUserWantToContinue();
                     } while (wantToChangeAmount);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;

@@ -91,11 +91,13 @@ namespace BED16_BusinessSystem_v2
         public void editProduct(int listNr, int priceOrQuantity)
         {
             int increment = 0;
-            bool isNotProductChanged = false;
+            bool isNotProductChanged = true;
 
             foreach (T product in wareHouse)
             {
-                if (priceOrQuantity == 1 && increment == listNr - 1)
+
+
+                if (priceOrQuantity == 1 && increment == listNr - 1 && wareHouse[increment]!=null)
                 {
                     List<string> allowedInput = new List<string>();
 
@@ -107,6 +109,7 @@ namespace BED16_BusinessSystem_v2
                         {
                             product.Price = Double.Parse(Menu.CheckIfProperUserInput(allowedInput));
                             isProperDoubleInput = true;
+                            isNotProductChanged = false;
                         }
                         catch (Exception e)
                         {
@@ -116,10 +119,9 @@ namespace BED16_BusinessSystem_v2
                     } while (!isProperDoubleInput);
                     Console.WriteLine("Product price has been changed!");
 
-                    isNotProductChanged = false;
                 }
 
-                else if (priceOrQuantity == 2 && increment == listNr - 1)
+                if (priceOrQuantity == 2 && increment == listNr - 1 && wareHouse[increment] != null)
                 {
                     List<string> allowedInput = new List<string>();
 
@@ -131,6 +133,7 @@ namespace BED16_BusinessSystem_v2
                         {
                             product.Quantity = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
                             isProperIntInput = true;
+                            isNotProductChanged = false;
                         }
                         catch (Exception e)
                         {
@@ -139,7 +142,7 @@ namespace BED16_BusinessSystem_v2
                         }
                     } while (!isProperIntInput);
                     Console.WriteLine("Product quantity has been changed!");
-                    isNotProductChanged = false;
+                    
                 }
 
                 increment++;
@@ -147,7 +150,7 @@ namespace BED16_BusinessSystem_v2
 
             if (isNotProductChanged)
             {
-                Console.WriteLine("No Product by that Nr, Please try again!");
+                Console.WriteLine("No Product by that number, Please try again!");
             }
 
             Console.WriteLine("Press any key to continue......");

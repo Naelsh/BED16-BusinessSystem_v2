@@ -94,6 +94,7 @@ namespace BED16_BusinessSystem_v2
                     ShowMainMenu(myStore, myCustomerDB);
 
                     break;
+
                 case "3":
                     // Change Amount In Inventory
                     
@@ -129,6 +130,7 @@ namespace BED16_BusinessSystem_v2
                     } while (wantToChangeAmount);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
+
                 case "4":
                     // Show Register New Customer
                     bool wantToCreateCustomer = true;
@@ -157,16 +159,19 @@ namespace BED16_BusinessSystem_v2
                     } while (wantToCreateOrder);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
+
                 case "6":
                     // Show Change Order
                     Console.WriteLine("This feature has not yet been implemented. Press any key to continue..");
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
+
                 case "7":
                     // Show List of All Orders based on customer
                     Console.WriteLine("This feature has not yet been implemented. Press any key to continue..");
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
+
                 case "8":
                     // Show Cancel Order
                     Order order = new Order();
@@ -179,6 +184,7 @@ namespace BED16_BusinessSystem_v2
                     } while (wantToCancelOrder);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
+
                 case "9":
                     // TerminateProgram
                     Console.WriteLine("Thank you for your visit! Have a great day");

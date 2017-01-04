@@ -72,7 +72,7 @@ namespace BED16_BusinessSystem_v2
                 }
                 else
                 {
-                    Console.WriteLine(customerData[i].ToString());
+                    Console.WriteLine(i + ". " + customerData[i].ToString());
                     noOfCustomers++;
                 }
             }

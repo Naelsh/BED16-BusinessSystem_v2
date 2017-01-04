@@ -60,31 +60,74 @@ namespace BED16_BusinessSystem_v2
 
                 case "2":
                     // Change price
-                    // first list all available products
-                    Console.WriteLine("-------Current List of Products-------");
-                    myStore.ListProducts();
-                    Console.WriteLine("--------------------------------------");
-                    // ask for which product ID that should be changed.
-                    Console.WriteLine("Which product do you want to change? Enter the full Product ID#");
-                    // set up a list of all products present
-
-                    /*
-                    List<string> products = new List<string>();
-                    foreach (var product in myStore)
-                    {
-                        products.Add(product.)
-                    }
-                    string userSpecifiedProductID = CheckIfProperUserInput();
-                    */
-
-                    // check if product exist in the store, continue until user enters a correct product
-                    // or want to return to main menu
-                    // if it does, ask for a new price and update the correct product
                     
+                    bool wantToChangePrice = true;
+                    do
+                    {
+                        // first list all available products
+                        Console.Clear();
+                        Console.WriteLine("-------Current List of Products-------");
+                        myStore.ListProducts();
+                        Console.WriteLine("--------------------------------------");
+                        // ask for which product ID that should be changed.
+                        Console.WriteLine("Which product do you want to change? Enter the row number based on above list");
+                        int listNumber = 1;
+                        List<string> allowedInput = new List<string>();
+                        bool isProperIntInput = false;
+                        do
+                        {
+                            try
+                            {
+                                listNumber = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                                isProperIntInput = true;
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                                Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
+                            }
+                        } while (!isProperIntInput);
+                        myStore.editProduct(listNumber, 1); // 1 = price for editing
+
+                        wantToCreateProducts = CheckIfUserWantToContinue();
+                    } while (wantToChangePrice);
+                    ShowMainMenu(myStore, myCustomerDB);
 
                     break;
                 case "3":
-                    // Show Change Amount In Inventory
+                    // Change Amount In Inventory
+                    
+                    bool wantToChangeAmount = true;
+                    do
+                    {
+                        // first list all available products
+                        Console.Clear();
+                        Console.WriteLine("-------Current List of Products-------");
+                        myStore.ListProducts();
+                        Console.WriteLine("--------------------------------------");
+                        // ask for which product ID that should be changed.
+                        Console.WriteLine("Which product do you want to change? Enter the row number based on above list");
+                        int listNumber = 1;
+                        List<string> allowedInput = new List<string>();
+                        bool isProperIntInput = false;
+                        do
+                        {
+                            try
+                            {
+                                listNumber = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                                isProperIntInput = true;
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                                Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
+                            }
+                        } while (!isProperIntInput);
+                        myStore.editProduct(listNumber, 2); // 2 = amount for editing
+
+                        wantToCreateProducts = CheckIfUserWantToContinue();
+                    } while (wantToChangeAmount);
+                    ShowMainMenu(myStore, myCustomerDB);
                     break;
                 case "4":
                     // Show Register New Customer

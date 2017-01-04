@@ -118,21 +118,21 @@ namespace BED16_BusinessSystem_v2
                 {
                     List<string> allowedInput = new List<string>();
 
-                    bool isProperDoubleInput = false;
+                    bool isProperIntInput = false;
                     Console.WriteLine("Please write the new Quantity");
                     do
                     {
                         try
                         {
                             product.quantity = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
-                            isProperDoubleInput = true;
+                            isProperIntInput = true;
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine("Make sure the price consists of a valid number without decimals");
-                            Debug.WriteLine("Error when new price of a Product was entered " + e.Message);
+                            Console.WriteLine("Make sure the quantity consists of a valid number without decimals");
+                            Debug.WriteLine("Error when new quantity of a Product was entered " + e.Message);
                         }
-                    } while (!isProperDoubleInput);
+                    } while (!isProperIntInput);
                     Console.WriteLine("Product quantity has been changed!");
                     isNotProductChanged = false;
                 }

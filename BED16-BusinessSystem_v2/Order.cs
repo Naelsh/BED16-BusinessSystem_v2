@@ -9,6 +9,10 @@ namespace BED16_BusinessSystem_v2
 {
     class Order
     {
+
+        static int numberOfOrders = 0; // the total number of orders present
+        static List<Order> orders = new List<Order>(); // list of all orders in the system
+
         // basic constructor
         public Order()
         {
@@ -30,7 +34,7 @@ namespace BED16_BusinessSystem_v2
             orders.Add(this);
         }
 
-        public static void AddNewOrder()
+        public static void AddNewOrder(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
         {
             Console.WriteLine("Do you have a customer that you want to create an order to directly? (y/n)");
             List<string> allowedUserInput = new List<string>();
@@ -38,9 +42,13 @@ namespace BED16_BusinessSystem_v2
             allowedUserInput.Add("N");
             string userInput = Menu.CheckIfProperUserInput(allowedUserInput);
             
+
+
             if (userInput == "Y")
             {
-                Console.WriteLine("This feature is not yet implemented");
+                myCustomerDB.ListCustomers();
+                Console.WriteLine("\nChoose one of the customers in the list above");
+
             }
             else
             {
@@ -49,8 +57,11 @@ namespace BED16_BusinessSystem_v2
             }
         }
 
-        static int numberOfOrders = 0; // the total number of orders present
-        static List<Order> orders = new List<Order>(); // list of all orders in the system
+        private static void AddArticleToOrder(Order order)
+        {
+            Console.WriteLine("");
+        }
+            
 
         // properties
         public bool IsDelivered { get; set; }

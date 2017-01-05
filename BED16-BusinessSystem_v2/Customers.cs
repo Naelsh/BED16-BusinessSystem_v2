@@ -12,6 +12,8 @@ namespace BED16_BusinessSystem_v2
     {
         // defines the first part of the generic list
         T[] customerData;
+        private int count = 1000;
+
         public CustomerDatabase()
         {
             customerData = new T[1000];
@@ -35,6 +37,39 @@ namespace BED16_BusinessSystem_v2
 
             if (nomatch)
                 customerData[Count++] = item;
+        }
+
+        public void AddCustomer(T item)
+        {
+            bool isNotProductAdded = true;
+
+            //If any space in the customerData List is empty the funktion stores the added product.
+            //If no list slot is =null the warehouse is full
+            for (int i = 0; i < count; i++)
+            {
+                if (customerData[i] == null)
+                {
+
+                    customerData[i] = item;
+
+                    i = count;
+                    isNotProductAdded = false;
+                    Console.WriteLine("Your customer has been added to the database");
+
+                }
+
+                //If the array is full the following lines are written in the console window.
+                if (i == count - 1 && isNotProductAdded)
+                {
+                    Console.WriteLine("Sorry the database is full, unable to add additional customers!");
+
+
+                }
+
+            }
+
+
+
         }
 
         public Customer GetCustomer(int listNr)
@@ -77,7 +112,7 @@ namespace BED16_BusinessSystem_v2
                 }
                 else
                 {
-                    Console.WriteLine(i + ". " + customerData[i].ToString());
+                    Console.WriteLine((i+1) + ". " + customerData[i].ToString());
                     noOfCustomers++;
                 }
             }

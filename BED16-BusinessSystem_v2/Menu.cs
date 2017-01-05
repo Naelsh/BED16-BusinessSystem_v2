@@ -196,7 +196,7 @@ namespace BED16_BusinessSystem_v2
                         } while (!isProperIntInput);
 
                         // get the customer object
-                        Customer listCustomer = myCustomerDB.GetCustomer(listNumber - 1); // handel obo-problem
+                        Customer listCustomer = myCustomerDB.GetCustomer(listNumber - 1); // handles obo-problem
 
                         // cycle through all orders present and show the orders available for that customer
                         foreach (Order listOrder in Order.orders)

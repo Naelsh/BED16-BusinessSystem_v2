@@ -47,7 +47,7 @@ namespace BED16_BusinessSystem_v2
                 //If the array is full the following lines are written in the console window.
                 if (i == count - 1 && isNotProductAdded)
                 {
-                    Console.WriteLine("Sorry the warehouse is full, unable to add addtional products!");
+                    Console.WriteLine("Sorry the warehouse is full, unable to add additional products!");
 
 
                 }

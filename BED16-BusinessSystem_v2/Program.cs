@@ -28,9 +28,9 @@ namespace BED16_BusinessSystem_v2
             // set up 10 customers
             for (int customer = 0; customer < 10; customer++)
             {
-                string customerFristName = "SurName " + customer;
-                string customerLastName = "Family Name " + customer;
-                string customerMail = "mail" + customer + "@test.com";
+                string customerFristName = "SURNAME " + customer;
+                string customerLastName = "FAMILYNAME " + customer;
+                string customerMail = "MAIL" + customer + "@TEST.COM";
                 Customer newCustomer = new Customer(customerFristName, customerLastName, customerMail);
                 myCustomerDB.AddCustomer(newCustomer);
             }
@@ -50,9 +50,9 @@ namespace BED16_BusinessSystem_v2
             for (int order = 0; order < 10; order++)
             {
                 Order newOrder = new Order();
-                Customer orderCustomer = myCustomerDB.GetCustomer(order % 2);
+                Customer orderCustomer = myCustomerDB.GetCustomer(order);
                 newOrder.Customer = orderCustomer;
-                Product orderProduct = myStore.GetProduct(order % 2);
+                Product orderProduct = myStore.GetProduct(order);
                 newOrder.Products.Add(orderProduct);
                 foreach (Product orderLineProduct in newOrder.Products)
                 {

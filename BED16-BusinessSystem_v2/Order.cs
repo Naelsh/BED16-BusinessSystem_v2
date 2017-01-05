@@ -152,7 +152,7 @@ namespace BED16_BusinessSystem_v2
             string orderProductsString = "";
             foreach (Product product in Products)
             {
-                orderProductsString = orderProductsString + "\n" + product.ToString();
+                orderProductsString = orderProductsString + "\n\n" + product.ToString();
             }
             string orderStatusString = "";
             if (this.IsActive)
@@ -163,7 +163,7 @@ namespace BED16_BusinessSystem_v2
             {
                 orderStatusString = "Canceled";
             }
-            return "Order number: " + this.OrderNumber + "Orderstatus: " + orderStatusString + " Customer: " 
+            return "Order number: " + this.OrderNumber + "\nOrderstatus: " + orderStatusString + "\nCustomer: \n" 
                 + this.Customer.ToString() + orderProductsString;
         }
 

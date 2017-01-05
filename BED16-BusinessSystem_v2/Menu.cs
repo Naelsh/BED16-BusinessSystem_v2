@@ -169,15 +169,16 @@ namespace BED16_BusinessSystem_v2
                     break;
 
                 case "7":
-                    // Show List of All Orders based on customer
-                    Console.WriteLine("This feature has not yet been implemented. Press any key to continue..");
-                    Console.ReadKey();
-                    myCustomerDB.ListCustomers(); // list all customers
-                    // ask for a customer, then list all orders that match that customer.
-                    Console.WriteLine("Select a customer above by entering their row number");
+                    
                     bool wantToListOrdersForCustomer = true;
                     do
                     {
+                        Console.Clear();
+                        // Show List of All Orders based on customer
+                        myCustomerDB.ListCustomers(); // list all customers
+
+                        // ask for a customer, then list all orders that match that customer.
+                        Console.WriteLine("Select a customer above by entering their row number");
                         int listNumber = 1;
                         List<string> allowedInput = new List<string>();
                         bool isProperIntInput = false;
@@ -199,13 +200,31 @@ namespace BED16_BusinessSystem_v2
                         Customer listCustomer = myCustomerDB.GetCustomer(listNumber - 1); // handles obo-problem
 
                         // cycle through all orders present and show the orders available for that customer
+                        string listOrderString = "";
                         foreach (Order listOrder in Order.orders)
                         {
-                            if (listOrder.Customer.Equals(listCustomer))
+                            try
                             {
-                                listOrder.ToString();
+                                // if several customers have the same mailadress all orders for all those customers will be extracted
+                                if (listOrder.Customer.email == listCustomer.email)
+                                {
+                                    listOrderString = listOrder.ToString() + "\n";
+                                    Console.WriteLine(listOrderString);
+                                }
+                                
+                            }
+                            catch (Exception)
+                            {
+                                Debug.WriteLine("Order lacking customer");
+
                             }
                         }
+                        if (listOrderString.Length < 1)
+                        {
+                            Console.WriteLine("There are no orders for this customer");
+                        }
+
+                        
 
                         wantToListOrdersForCustomer = CheckIfUserWantToContinue();
                     } while (wantToListOrdersForCustomer);

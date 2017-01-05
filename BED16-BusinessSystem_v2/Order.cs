@@ -11,7 +11,15 @@ namespace BED16_BusinessSystem_v2
     {
 
         static int numberOfOrders = 0; // the total number of orders present
-        static List<Order> orders = new List<Order>(); // list of all orders in the system
+        public static List<Order> orders = new List<Order>(); // list of all orders in the system
+
+        // properties
+        public bool IsDelivered { get; set; }
+        public bool IsActive { get; set; }
+        public int OrderNumber { get; private set; }
+        public Customer Customer { get; set; }
+        public List<Product> Products { get; set; } // list of all products
+        // public List<int> quantity { get; set; } // list of all quantities of products. Is in direct correlation to the products list
 
         // basic constructor
         public Order()
@@ -21,6 +29,7 @@ namespace BED16_BusinessSystem_v2
             this.IsActive = true;
             this.IsDelivered = false;
             orders.Add(this);
+            this.Products = new List<Product>();
         }
 
         public static void AddNewOrder(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
@@ -57,15 +66,16 @@ namespace BED16_BusinessSystem_v2
                         Debug.WriteLine("Error when list number of a Customer was entered " + e.Message);
                     }
                 } while (!isProperIntInput);
-                newOrder.Customer = myCustomerDB.GetCustomer(listNumber);
+                newOrder.Customer = myCustomerDB.GetCustomer(listNumber); // this code is not user input error safe yet
             }
 
             Console.WriteLine("Next step is to add articles to your order. Press any key to continue");
-            Console.ReadKey();
+            Console.ReadLine();
             AddProductToOrder(newOrder, myStore);
 
             Console.WriteLine("The next step is to set the amount of each article in your order. Press any key to continue");
-            Console.ReadKey();
+            Console.ReadLine();
+            AddQuantityForProducts(newOrder);
 
         }
 
@@ -99,9 +109,11 @@ namespace BED16_BusinessSystem_v2
                         Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
                     }
                 } while (!isProperIntInput);
+
                 Product selectedProduct = myStore.GetProduct((listNumber - 1));
-                Console.WriteLine("The following product has been added to your order:\n" + selectedProduct.ToString());
+                selectedProduct.Quantity = 0;
                 order.Products.Add(selectedProduct);
+                Console.WriteLine("The following product has been added to your order:\n" + selectedProduct.ToString());
 
                 wantToAddProduct = Menu.CheckIfUserWantToContinue();
             } while (wantToAddProduct);
@@ -131,22 +143,28 @@ namespace BED16_BusinessSystem_v2
                     }
                 } while (!isProperIntInput);
                 Console.WriteLine("Added: " + quantity + " to the product");
-                order.quantity.Add(quantity);
+                product.Quantity = quantity;
             }
         }
-            
-
-        // properties
-        public bool IsDelivered { get; set; }
-        public bool IsActive { get; set; }
-        public int OrderNumber { get; private set; }
-        public Customer Customer { get; set; }
-        public List<Product> Products { get; set; } // list of all products
-        public List<int> quantity { get; set; } // list of all quantities of products. Is in direct correlation to the products list
 
         public override string ToString()
         {
-            return "Order number: " + this.OrderNumber + " Customer: " + this.Customer.ToString();
+            string orderProductsString = "";
+            foreach (Product product in Products)
+            {
+                orderProductsString = orderProductsString + "\n" + product.ToString();
+            }
+            string orderStatusString = "";
+            if (this.IsActive)
+            {
+                orderStatusString = "Open";
+            }
+            if (!this.IsActive)
+            {
+                orderStatusString = "Canceled";
+            }
+            return "Order number: " + this.OrderNumber + "Orderstatus: " + orderStatusString + " Customer: " 
+                + this.Customer.ToString() + orderProductsString;
         }
 
         // add a product based on product number to the order
@@ -244,5 +262,5 @@ namespace BED16_BusinessSystem_v2
 
 
 
-    }
+}
 

@@ -22,5 +22,22 @@ namespace BED16_BusinessSystem_v2
         {
             return userInput;
         }
+
+        static void setUpTestData(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
+        {
+            // set up customers
+            List<string> customerSurNames = new List<string>();
+            List<string> customerLastNames = new List<string>();
+            List<string> customerMail = new List<string>();
+            for (int customer = 0; customer < 10; customer++)
+            {
+                
+            }
+
+            // set up products
+
+            // set up orders
+
+        }
     }
 }

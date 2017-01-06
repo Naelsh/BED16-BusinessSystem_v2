@@ -233,7 +233,7 @@ namespace BED16_BusinessSystem_v2
 
                 case "8":
                     // Show Cancel Order
-                    Order order = new Order();
+                    Order order = new Order("Null");
 
                     bool wantToCancelOrder = true;
                     do

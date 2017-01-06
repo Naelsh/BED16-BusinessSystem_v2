@@ -32,6 +32,13 @@ namespace BED16_BusinessSystem_v2
             this.Products = new List<Product>();
         }
 
+        // A constructor that don´t att any new orders to the list but will make all the methods of the class accessable.
+        public Order(string nullOrder)
+        {
+
+
+        }
+
         public static void AddNewOrder(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
         {
             Console.WriteLine("You will follow a form adding all data in sections. First of is adding a customer if one is "
@@ -182,9 +189,30 @@ namespace BED16_BusinessSystem_v2
         // print out a list of all orders present in the list of orders
         public void ListAllOrders()
         {
-            foreach (var order in orders)
+            int increment = 0;
+
+           
+            Console.WriteLine("Pause");
+            foreach (Order order in orders)
             {
-                Console.WriteLine(order.ToString());
+
+
+                try
+                {
+
+                    Debug.WriteLine(increment);
+                    if (orders[increment] != null)
+                    {
+
+                        Console.WriteLine(order.ToString());
+                        Console.WriteLine("----------------------");
+
+                    }
+                }
+                catch (Exception e)
+                { Debug.WriteLine("error in order " + increment + " : " + e.Message); }
+                increment++;
+
             }
         }
 
@@ -208,6 +236,9 @@ namespace BED16_BusinessSystem_v2
         {
            
             int orderNrInput=0;
+
+            
+
             Console.WriteLine("Please write the order number representing the order you want to cancel: ");
             ListAllOrders();
 
@@ -248,7 +279,8 @@ namespace BED16_BusinessSystem_v2
 
             if (IsNotOrderNrFound)
             {
-                Console.WriteLine("No order by given order number was found!");
+                Console.WriteLine("No active order by given order number was found!");
+                Console.WriteLine("Please try again!");
             }
 
             Console.WriteLine("Please press any key to continue...");

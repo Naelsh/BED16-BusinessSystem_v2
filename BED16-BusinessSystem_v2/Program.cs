@@ -18,7 +18,8 @@ namespace BED16_BusinessSystem_v2
             myStore.AddProduct(produkt1);
             setUpTestData(myStore, myCustomerDB);
 
-            Order order = new Order();
+            
+
             Menu.ShowMainMenu(myStore, myCustomerDB);
         }
 

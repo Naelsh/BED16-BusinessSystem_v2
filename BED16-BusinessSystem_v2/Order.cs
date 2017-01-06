@@ -271,7 +271,10 @@ namespace BED16_BusinessSystem_v2
                 if (order.OrderNumber == orderNrInput && order.IsActive)
                 {
                     order.IsActive = false;
-                    Console.WriteLine("Order: " + orderNrInput + " have been canceled!");
+                    Console.Clear();
+                    Console.WriteLine("Order: " + orderNrInput + " have been canceled, see order specifications below:");
+                    Console.WriteLine("----------------------------------------------");
+                    Console.WriteLine(order.ToString());
                     IsNotOrderNrFound = false;
                 }
                 

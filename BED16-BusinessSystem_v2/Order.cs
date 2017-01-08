@@ -293,7 +293,7 @@ namespace BED16_BusinessSystem_v2
         }
 
 
-        public void ChangeOrder()
+        public void ChangeOrder(Store<Product> myStore)
         {
             Console.WriteLine("Write the order number representing the order you want to edit: ");
             ListAllOrders();
@@ -321,13 +321,14 @@ namespace BED16_BusinessSystem_v2
             } while (!isProperDoubleInput);
 
 
-            int specificationInput;
+            int specificationInput=0;
             List<string> allowedSpecification = new List<string>();
             allowedSpecification.Add("1");
             allowedSpecification.Add("2");
 
 
             //Input which feature of the order you want to change
+           
             isProperDoubleInput = false;
             foreach (var order in orders)
             {
@@ -362,6 +363,88 @@ namespace BED16_BusinessSystem_v2
 
 
 
+                    //If user wants to edit costumer information of the order
+                    if (specificationInput == 1)
+                    {
+                        string userFirstName, userLastName, userEmail;
+                        List<string> allowed = new List<string>();
+                        bool isProperStringInput=false;
+
+                        do
+                        {
+                            try
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Write a new first name for your costumer: ");
+                                userFirstName = Menu.CheckIfProperUserInput(allowed);
+
+                                Console.Clear();
+                                Console.WriteLine("Write a new last name for your costumer: ");
+                                userLastName = Menu.CheckIfProperUserInput(allowed);
+
+                                Console.Clear();
+                                Console.WriteLine("Write a new email for your costumer: ");
+                                userEmail = Menu.CheckIfProperUserInput(allowed);
+
+                                order.Customer = new Customer(userFirstName, userLastName, userEmail);
+                                isProperStringInput = true;
+
+
+                                Console.Clear();
+                                Console.WriteLine("The costumer information of Order " + order.OrderNumber + " have been changed: ");
+                                Console.WriteLine("----------------------------------------------");
+                                Console.WriteLine(order.ToString());
+                                Console.WriteLine("----------------------------------------------");
+                                
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Input not eglible, please try again! ");
+                                Debug.WriteLine("Error when user input new costumer information." + e.Message);
+
+                            }
+
+                        } while (!isProperStringInput);
+
+
+
+
+
+
+
+
+                        
+                    }
+
+
+                   
+
+                        if (specificationInput == 2)
+                    {
+
+
+                        //Change products in order
+                       
+                        order.Products.Clear();
+                        Console.WriteLine("All products in your order have been deleted, please add new products with the following instructions: ");
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        AddProductToOrder(order, myStore);
+
+
+                        Console.Clear();
+                        Console.WriteLine("The products in Order " + order.OrderNumber + " have been changed: ");
+                        Console.WriteLine("----------------------------------------------");
+                        Console.WriteLine(order.ToString());
+                        Console.WriteLine("----------------------------------------------");
+
+
+
+
+                    }
+
 
                 }
 
@@ -372,6 +455,7 @@ namespace BED16_BusinessSystem_v2
 
 
 
+            Console.WriteLine("Press any key to continue...");
 
 
         }

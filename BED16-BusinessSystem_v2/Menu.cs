@@ -164,7 +164,7 @@ namespace BED16_BusinessSystem_v2
                 case "6":
                     // Show ChangeOrder option
                     Order orderChange = new Order("Null");
-                    orderChange.ChangeOrder();
+                    orderChange.ChangeOrder(myStore);
                     Console.ReadKey();
                     ShowMainMenu(myStore, myCustomerDB);
                     break;

@@ -192,7 +192,7 @@ namespace BED16_BusinessSystem_v2
             int increment = 0;
 
            
-            Console.WriteLine("Pause");
+           
             foreach (Order order in orders)
             {
 
@@ -204,7 +204,7 @@ namespace BED16_BusinessSystem_v2
                     if (orders[increment] != null)
                     {
 
-                        Console.WriteLine(order.ToString());
+                        Console.WriteLine("Order Number: " + order.OrderNumber + " Costumer: " + order.Customer.ToString());
                         Console.WriteLine("----------------------");
 
                     }
@@ -364,10 +364,6 @@ namespace BED16_BusinessSystem_v2
 
 
                 }
-
-
-
-
 
             }
 

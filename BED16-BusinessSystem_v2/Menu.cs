@@ -162,8 +162,9 @@ namespace BED16_BusinessSystem_v2
                     break;
 
                 case "6":
-                    // Show Change Order
-                    Console.WriteLine("This feature has not yet been implemented. Press any key to continue..");
+                    // Show ChangeOrder option
+                    Order orderChange = new Order("Null");
+                    orderChange.ChangeOrder();
                     Console.ReadKey();
                     ShowMainMenu(myStore, myCustomerDB);
                     break;

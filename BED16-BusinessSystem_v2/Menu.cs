@@ -156,16 +156,22 @@ namespace BED16_BusinessSystem_v2
                     {
                         Order.AddNewOrder(myStore, myCustomerDB);
                         
-                        wantToCreateProducts = CheckIfUserWantToContinue();
+                        wantToCreateOrder = CheckIfUserWantToContinue();
                     } while (wantToCreateOrder);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
 
                 case "6":
                     // Show ChangeOrder option
-                    Order orderChange = new Order("Null");
-                    orderChange.ChangeOrder(myStore);
-                    Console.ReadKey();
+                    bool wantToChangeOrder = true;
+
+                    do
+                    {
+                        Order orderChange = new Order("Null");
+                        orderChange.ChangeOrder(myStore);
+                        Console.ReadKey();
+                        wantToChangeOrder = CheckIfUserWantToContinue();
+                    } while (wantToChangeOrder);
                     ShowMainMenu(myStore, myCustomerDB);
                     break;
 

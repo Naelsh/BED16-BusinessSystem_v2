@@ -257,7 +257,7 @@ namespace BED16_BusinessSystem_v2
                 catch (Exception e)
                 {
                     Console.WriteLine("Input not eglible, please try again! ");
-                    Debug.WriteLine("Error when new price of a Product was entered " + e.Message);
+                    Debug.WriteLine("Error when trying to cancle order." + e.Message);
                 }
             } while (!isProperDoubleInput);
 
@@ -290,6 +290,94 @@ namespace BED16_BusinessSystem_v2
             Console.ReadKey();
             
             
+        }
+
+
+        public void ChangeOrder()
+        {
+            Console.WriteLine("Write the order number representing the order you want to edit: ");
+            ListAllOrders();
+            int orderNrUserInput=0;
+            List<string> allowedInput = new List<string>();
+
+            bool isProperDoubleInput = false;
+
+
+            //Input which order you want to edit by stating the order nr
+            do
+            {
+                try
+                {
+                    orderNrUserInput = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+
+                    isProperDoubleInput = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Input not eglible, please try again! ");
+                    Debug.WriteLine("Error in user input when trying to choose which order to cancle." + e.Message);
+                   
+                }
+            } while (!isProperDoubleInput);
+
+
+            int specificationInput;
+            List<string> allowedSpecification = new List<string>();
+            allowedSpecification.Add("1");
+            allowedSpecification.Add("2");
+
+
+            //Input which feature of the order you want to change
+            isProperDoubleInput = false;
+            foreach (var order in orders)
+            {
+                if (order.OrderNumber == orderNrUserInput)
+                {
+                    order.IsActive = false;
+                    Console.Clear();
+                    Console.WriteLine("Chosen order: ");
+                    Console.WriteLine("----------------------------------------------");
+                    Console.WriteLine(order.ToString());
+                    Console.WriteLine("----------------------------------------------");
+                    Console.WriteLine("Write the number of the specification you want to edit: ");
+                    Console.WriteLine("1. Costumer information");
+                    Console.WriteLine("2. Products in order");
+
+
+                    do
+                    {
+                        try
+                        {
+                            specificationInput = Int32.Parse(Menu.CheckIfProperUserInput(allowedSpecification));
+
+                            isProperDoubleInput = true;
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Input not eglible, please try again! ");
+                            Debug.WriteLine("Error in user input when trying to choose which order specification to edit." + e.Message);
+
+                        }
+                    } while (!isProperDoubleInput);
+
+
+
+
+                }
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
         }
 
 

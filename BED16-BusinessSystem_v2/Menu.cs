@@ -33,7 +33,7 @@ namespace BED16_BusinessSystem_v2
 
             Console.Write("Select an option by entering the corresponding menu number ");
             List<string> allowedUserInput = new List<string>();
-            for (int menuRow = 1; menuRow <= 9; menuRow++)
+            for (int menuRow = 1; menuRow <= 10; menuRow++)
             {
                 allowedUserInput.Add(menuRow.ToString());
             }
@@ -214,7 +214,7 @@ namespace BED16_BusinessSystem_v2
                             try
                             {
                                 // if several customers have the same mailadress all orders for all those customers will be extracted
-                                if (listOrder.Customer.email == listCustomer.email)
+                                if (listOrder.CustomerID == listCustomer.CustomerID)
                                 {
                                     listOrderString = listOrder.ToString() + "\n";
                                     Console.WriteLine(listOrderString);

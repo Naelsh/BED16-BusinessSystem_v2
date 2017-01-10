@@ -112,7 +112,7 @@ namespace BED16_BusinessSystem_v2
                 }
                 else
                 {
-                    Console.WriteLine((i+1) + ". " + customerData[i].ToString());
+                    Console.WriteLine(customerData[i].ToString());
                     noOfCustomers++;
                 }
             }
@@ -126,21 +126,25 @@ namespace BED16_BusinessSystem_v2
     // class Customer defines the attributes of a customer
     public class Customer
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public int CustomerID { get; set; }
+        static int customerNumberCount = 0;
 
         public Customer(string firstname, string lastname, string email)
         {
-            this.firstName = firstname;
-            this.lastName = lastname;
-            this.email = email;
+            this.FirstName = firstname;
+            this.LastName = lastname;
+            this.Email = email;
+            customerNumberCount++;
+            this.CustomerID = customerNumberCount;
         }
 
         // handels return of various data of the customer
         public override string ToString()
         {
-            return "First name: " + firstName + " Last name: " + lastName + " Email: " + email;
+            return "Customer ID: " + CustomerID + " First name: " + FirstName + " Last name: " + LastName + " Email: " + Email;
         }
     }
 }

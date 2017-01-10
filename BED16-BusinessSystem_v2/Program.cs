@@ -52,7 +52,7 @@ namespace BED16_BusinessSystem_v2
             {
                 Order newOrder = new Order();
                 Customer orderCustomer = myCustomerDB.GetCustomer(order);
-                newOrder.Customer = orderCustomer;
+                newOrder.CustomerID = orderCustomer.CustomerID;
                 Product orderProduct = myStore.GetProduct(order);
                 newOrder.Products.Add(orderProduct);
                 foreach (Product orderLineProduct in newOrder.Products)

@@ -17,7 +17,7 @@ namespace BED16_BusinessSystem_v2
         public bool IsDelivered { get; set; }
         public bool IsActive { get; set; }
         public int OrderNumber { get; private set; }
-        public Customer Customer { get; set; }
+        public int CustomerID { get; set; }
         public List<Product> Products { get; set; } // list of all products
         // public List<int> quantity { get; set; } // list of all quantities of products. Is in direct correlation to the products list
 
@@ -41,41 +41,35 @@ namespace BED16_BusinessSystem_v2
 
         public static void AddNewOrder(Store<Product> myStore, CustomerDatabase<Customer> myCustomerDB)
         {
-            Console.WriteLine("You will follow a form adding all data in sections. First of is adding a customer if one is "
-                + "prepared. Next is adding the products you want in your order."
-                + " The final step is defining how many of each product that should be present on each product-row\n");
-            Console.WriteLine("Do you have a customer that you want to att to order now? (y/n)");
-            List<string> allowedUserInput = new List<string>();
-            allowedUserInput.Add("Y");
-            allowedUserInput.Add("N");
-            string userInput = Menu.CheckIfProperUserInput(allowedUserInput);
-
+            Console.WriteLine("You will follow a form adding all data in sections. First of is adding a customer. "
+                + "Next is adding the products you want in your order. "
+                + "The final step is defining how many of each product that should be present on each product-row\n");
+            
             Order newOrder = new Order();
             Console.WriteLine("New order has been created. Order number: " + newOrder.OrderNumber);
 
-            if (userInput == "Y")
+            
+            myCustomerDB.ListCustomers();
+            Console.WriteLine("\nChoose one of the customers in the list above by entering the appropriate number");
+            int listNumber = 1;
+            List<string> allowedInput = new List<string>();
+            bool isProperIntInput = false;
+            do
             {
-                myCustomerDB.ListCustomers();
-                Console.WriteLine("\nChoose one of the customers in the list above by entering the appropriate number");
-                int listNumber = 1;
-                List<string> allowedInput = new List<string>();
-                bool isProperIntInput = false;
-                do
+                try
                 {
-                    try
-                    {
-                        listNumber = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
-                        isProperIntInput = true;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Make sure the input consists of a valid number without decimals");
-                        Debug.WriteLine("Error when list number of a Customer was entered " + e.Message);
-                    }
-                } while (!isProperIntInput);
-                newOrder.Customer = myCustomerDB.GetCustomer(listNumber); // this code is not user input error safe yet
-            }
-
+                    listNumber = Int32.Parse(Menu.CheckIfProperUserInput(allowedInput));
+                    isProperIntInput = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                    Debug.WriteLine("Error when list number of a Customer was entered " + e.Message);
+                }
+            } while (!isProperIntInput);
+            newOrder.CustomerID = listNumber;
+            
+    
             Console.WriteLine("Next step is to add articles to your order. Press any key to continue");
             Console.ReadLine();
             AddProductToOrder(newOrder, myStore);
@@ -94,15 +88,15 @@ namespace BED16_BusinessSystem_v2
             Console.WriteLine("-------Current List of Products-------");
             myStore.ListProducts();
             Console.WriteLine("--------------------------------------");
-
-            // ask for which product ID that should be added to the order.
-            Console.WriteLine("Which product do you want to add? Enter the row number based on above list");
+            
             int listNumber = 1;
             List<string> allowedInput = new List<string>();
             bool isProperIntInput = false;
             bool wantToAddProduct = true;
             do
             {
+                // ask for which product ID that should be added to the order.
+                Console.WriteLine("Which product do you want to add? Enter the row number based on above list");
                 do
                 {
                     try
@@ -171,7 +165,7 @@ namespace BED16_BusinessSystem_v2
                 orderStatusString = "Canceled";
             }
             return "Order number: " + this.OrderNumber + "\nOrderstatus: " + orderStatusString + "\nCustomer: \n" 
-                + this.Customer.ToString() + orderProductsString;
+                + this.CustomerID.ToString() + orderProductsString;
         }
 
         // add a product based on product number to the order
@@ -180,11 +174,13 @@ namespace BED16_BusinessSystem_v2
             this.Products.Add(product);
         }
 
+        /* Deprecated code
         // removed the old customer and set it to the new customer
         public void SetCustomerToOrder(Customer customer)
         {
             this.Customer = customer;
         }
+        */
 
         // print out a list of all orders present in the list of orders
         public void ListAllOrders()
@@ -204,7 +200,7 @@ namespace BED16_BusinessSystem_v2
                     if (orders[increment] != null)
                     {
 
-                        Console.WriteLine("Order Number: " + order.OrderNumber + " Costumer: " + order.Customer.ToString());
+                        Console.WriteLine("Order Number: " + order.OrderNumber + " Costumer: " + order.CustomerID.ToString());
                         Console.WriteLine("----------------------");
 
                     }
@@ -362,7 +358,7 @@ namespace BED16_BusinessSystem_v2
                     } while (!isProperDoubleInput);
 
 
-
+                    /* Deprecated code
                     //If user wants to edit costumer information of the order
                     if (specificationInput == 1)
                     {
@@ -417,7 +413,7 @@ namespace BED16_BusinessSystem_v2
 
                         
                     }
-
+                    */
 
                    
 

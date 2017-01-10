@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -28,10 +28,11 @@ namespace BED16_BusinessSystem_v2
                                 + "\n6. Order - Change an order"
                                 + "\n7. Order - List all orders by a customer"
                                 + "\n8. Order - Cancel an order"
-                                + "\n9. to quit");
+                                + "\n9. Product - List amount of products in inventory"
+                                + "\n10. to quit");
 
             Console.Write("Select an option by entering the corresponding menu number ");
-            List <string> allowedUserInput= new List<string>();
+            List<string> allowedUserInput = new List<string>();
             for (int menuRow = 1; menuRow <= 9; menuRow++)
             {
                 allowedUserInput.Add(menuRow.ToString());
@@ -52,7 +53,7 @@ namespace BED16_BusinessSystem_v2
                         Console.WriteLine("-------Current List of Products-------"); // temporary debugging code
                         myStore.ListProducts(); // temporary debugging code
                         Console.WriteLine("--------------------------------------"); // temporary debugging code
-                        
+
                         wantToCreateProducts = CheckIfUserWantToContinue();
                     } while (wantToCreateProducts);
                     ShowMainMenu(myStore, myCustomerDB);
@@ -60,7 +61,7 @@ namespace BED16_BusinessSystem_v2
 
                 case "2":
                     // Change price
-                    
+
                     bool wantToChangePrice = true;
                     do
                     {
@@ -97,7 +98,7 @@ namespace BED16_BusinessSystem_v2
 
                 case "3":
                     // Change Amount In Inventory
-                    
+
                     bool wantToChangeAmount = true;
                     do
                     {
@@ -155,7 +156,7 @@ namespace BED16_BusinessSystem_v2
                     do
                     {
                         Order.AddNewOrder(myStore, myCustomerDB);
-                        
+
                         wantToCreateOrder = CheckIfUserWantToContinue();
                     } while (wantToCreateOrder);
                     ShowMainMenu(myStore, myCustomerDB);
@@ -176,7 +177,7 @@ namespace BED16_BusinessSystem_v2
                     break;
 
                 case "7":
-                    
+
                     bool wantToListOrdersForCustomer = true;
                     do
                     {
@@ -218,7 +219,7 @@ namespace BED16_BusinessSystem_v2
                                     listOrderString = listOrder.ToString() + "\n";
                                     Console.WriteLine(listOrderString);
                                 }
-                                
+
                             }
                             catch (Exception)
                             {
@@ -231,7 +232,7 @@ namespace BED16_BusinessSystem_v2
                             Console.WriteLine("There are no orders for this customer");
                         }
 
-                        
+
 
                         wantToListOrdersForCustomer = CheckIfUserWantToContinue();
                     } while (wantToListOrdersForCustomer);
@@ -252,6 +253,15 @@ namespace BED16_BusinessSystem_v2
                     break;
 
                 case "9":
+                    // Check amount of products in inventory
+                    myStore.ListProducts();
+                    Console.WriteLine("PRess any key to continue");
+                    Console.ReadKey();
+                    Menu.ShowMainMenu(myStore, myCustomerDB);
+                    break;
+
+
+                case "10":
                     // TerminateProgram
                     Console.WriteLine("Thank you for your visit! Have a great day");
                     Console.ReadLine();
@@ -271,7 +281,7 @@ namespace BED16_BusinessSystem_v2
             allowedInput.Add("Y");
             allowedInput.Add("N");
             string userInput = CheckIfProperUserInput(allowedInput);
-            
+
             if (userInput == "Y")
             {
                 return true;

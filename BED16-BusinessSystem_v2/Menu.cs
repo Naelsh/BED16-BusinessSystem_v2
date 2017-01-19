@@ -29,11 +29,12 @@ namespace BED16_BusinessSystem_v2
                                 + "\n7. Order - List all orders by a customer"
                                 + "\n8. Order - Cancel an order"
                                 + "\n9. Product - List amount of products in inventory"
-                                + "\n10. to quit");
+                                + "\n10. Customer - Change existing customer"
+                                + "\n11. to quit");
 
             Console.Write("Select an option by entering the corresponding menu number ");
             List<string> allowedUserInput = new List<string>();
-            for (int menuRow = 1; menuRow <= 10; menuRow++)
+            for (int menuRow = 1; menuRow <= 11; menuRow++)
             {
                 allowedUserInput.Add(menuRow.ToString());
             }
@@ -259,9 +260,19 @@ namespace BED16_BusinessSystem_v2
                     Console.ReadKey();
                     Menu.ShowMainMenu(myStore, myCustomerDB);
                     break;
-
-
                 case "10":
+                    // Change an existing customer
+                    myCustomerDB.ListCustomers();
+                    bool wantToEditCustomer = true;
+                    do
+                    {
+                        myCustomerDB.ChangeCustomer(myCustomerDB);
+                        wantToEditCustomer = CheckIfUserWantToContinue(); // ask for further customers to be updated
+                    } while (wantToEditCustomer);
+                    // if no customers to be updated, continue with the program
+                    Menu.ShowMainMenu(myStore, myCustomerDB);
+                    break;
+                case "11":
                     // TerminateProgram
                     Console.WriteLine("Thank you for your visit! Have a great day");
                     Console.ReadLine();
@@ -315,6 +326,7 @@ namespace BED16_BusinessSystem_v2
                 {
                     Console.WriteLine("Input requires at least one character");
                 }
+
                 foreach (var allowedInput in allowedInputs)
                 {
                     if (allowedInput == userInput)

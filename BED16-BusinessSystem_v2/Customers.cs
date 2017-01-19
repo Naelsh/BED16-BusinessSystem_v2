@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -121,6 +122,99 @@ namespace BED16_BusinessSystem_v2
                 Console.WriteLine("No customers are registered in customer DB yet");
             }
         }
+
+        public void ChangeCustomer(CustomerDatabase<Customer> customerDB)
+        {
+            Console.WriteLine("Which customer do you want to edit? Enter customerID");
+            List<string> allowedInputs = new List<string>();
+            for (int customerNumber = 1; customerNumber <= Customer.customerNumberCount; customerNumber++)
+            {
+                allowedInputs.Add(customerNumber.ToString());
+            }
+
+            int customerID = 0;
+            bool isProperIntInput = false;
+            do
+            {
+                try
+                {
+                    customerID = Int32.Parse(Menu.CheckIfProperUserInput(allowedInputs));
+                    isProperIntInput = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                    Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
+                }
+            } while (!isProperIntInput);
+
+            // only view the customer asked for
+            Console.Clear();
+            Console.WriteLine(this.GetCustomer(customerID).ToString());
+
+            bool wantToEditProperty = false;
+            do
+            {
+
+            
+                // ask for property to be changed
+                Console.WriteLine("Which property do you want to change?"
+                                    +"\n 1. First Name"
+                                    +"\n 2. Last Name"
+                                    +"\n 3. Email");
+                allowedInputs.Clear();
+                for (int allowedNumber = 1; allowedNumber <= 3; allowedNumber++)
+                {
+                    allowedInputs.Add(allowedNumber.ToString());
+                }
+
+                isProperIntInput = false;
+                int menuOption = 1;
+                do
+                {
+                    try
+                    {
+                        menuOption = Int32.Parse(Menu.CheckIfProperUserInput(allowedInputs));
+                        isProperIntInput = true;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Make sure the input consists of a valid number without decimals");
+                        Debug.WriteLine("Error when new list number of a Product was entered " + e.Message);
+                    }
+                } while (!isProperIntInput);
+
+                // get the new value for the property
+                Console.WriteLine("What is the new value you want to replace the old one with?");
+                allowedInputs.Clear();
+                string newInputValue = Menu.CheckIfProperUserInput(allowedInputs);
+
+                // depending on which entry change the corresponding property.
+                switch (menuOption)
+                {
+                    case 1:
+                        customerDB.GetCustomer(customerID).FirstName = newInputValue;
+                        break;
+                    case 2:
+                        customerDB.GetCustomer(customerID).LastName = newInputValue;
+                        break;
+                    case 3:
+                        customerDB.GetCustomer(customerID).Email = newInputValue;
+                        break;
+                    default:
+                        break;
+                }
+
+                // ask if another property should be edited
+                wantToEditProperty = Menu.CheckIfUserWantToContinue();
+            } while (wantToEditProperty);
+
+            // when no further properties are to be edited, list the customer to the user
+            Console.Clear();
+            Console.WriteLine("The result of your editing is as follows:");
+            Console.WriteLine(customerDB.GetCustomer(customerID).ToString());
+
+        }
     }
 
     // class Customer defines the attributes of a customer
@@ -130,7 +224,7 @@ namespace BED16_BusinessSystem_v2
         public string LastName { get; set; }
         public string Email { get; set; }
         public int CustomerID { get; set; }
-        static int customerNumberCount = 0;
+        public static int customerNumberCount = 0;
 
         public Customer(string firstname, string lastname, string email)
         {
@@ -144,7 +238,11 @@ namespace BED16_BusinessSystem_v2
         // handels return of various data of the customer
         public override string ToString()
         {
-            return "Customer ID: " + CustomerID + " First name: " + FirstName + " Last name: " + LastName + " Email: " + Email;
+            return "Customer ID: " + this.CustomerID + " First name: " + this.FirstName + " Last name: " + this.LastName + " Email: " + this.Email;
         }
+
+
     }
+
+    
 }

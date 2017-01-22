@@ -25,7 +25,7 @@ namespace BED16_BusinessSystem_v2
                                 + "\n3. Product - Change amount of a product in the inventory"
                                 + "\n4. Customer - Register a new customer"
                                 + "\n5. Order - Create a new order for a customer"
-                                + "\n6. Order - Change an order"
+                                + "\n6. Order - Change products in order"
                                 + "\n7. Order - List all orders by a customer"
                                 + "\n8. Order - Cancel an order"
                                 + "\n9. Product - List amount of products in inventory"

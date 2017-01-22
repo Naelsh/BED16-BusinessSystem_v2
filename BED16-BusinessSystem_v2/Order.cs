@@ -111,10 +111,17 @@ namespace BED16_BusinessSystem_v2
                     }
                 } while (!isProperIntInput);
 
-                Product selectedProduct = myStore.GetProduct((listNumber - 1));
-                selectedProduct.Quantity = 0;
-                order.Products.Add(selectedProduct);
-                Console.WriteLine("The following product has been added to your order:\n" + selectedProduct.ToString());
+                if (myStore.GetProduct(listNumber - 1) != null)
+                {
+                    Product selectedProduct = myStore.GetProduct((listNumber - 1));
+                    selectedProduct.Quantity = 0;
+                    order.Products.Add(selectedProduct);
+                    Console.WriteLine("The following product has been added to your order:\n" + selectedProduct.ToString());
+
+                }
+
+                else
+                { Console.WriteLine("No product by that number, please try again!"); }
 
                 wantToAddProduct = Menu.CheckIfUserWantToContinue();
             } while (wantToAddProduct);
@@ -317,117 +324,35 @@ namespace BED16_BusinessSystem_v2
             } while (!isProperDoubleInput);
 
 
-            int specificationInput=0;
-            List<string> allowedSpecification = new List<string>();
-            allowedSpecification.Add("1");
-            allowedSpecification.Add("2");
 
 
             //Input which feature of the order you want to change
-           
+
+            bool isOrderPickCorrect = false;
+
             isProperDoubleInput = false;
             foreach (var order in orders)
             {
                 if (order.OrderNumber == orderNrUserInput)
                 {
-                    order.IsActive = false;
+                    isOrderPickCorrect = true;
+                    //Change products in order
+                    //order.IsActive = false;
                     Console.Clear();
+
+                    order.Products.Clear();
+                    Console.WriteLine("All products in your order have been deleted, please add new products with the following instructions: ");
                     Console.WriteLine("Chosen order: ");
                     Console.WriteLine("----------------------------------------------");
                     Console.WriteLine(order.ToString());
-                    Console.WriteLine("----------------------------------------------");
-                    Console.WriteLine("Write the number of the specification you want to edit: ");
-                    Console.WriteLine("1. Costumer information");
-                    Console.WriteLine("2. Products in order");
-
-
-                    do
-                    {
-                        try
-                        {
-                            specificationInput = Int32.Parse(Menu.CheckIfProperUserInput(allowedSpecification));
-
-                            isProperDoubleInput = true;
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine("Input not eglible, please try again! ");
-                            Debug.WriteLine("Error in user input when trying to choose which order specification to edit." + e.Message);
-
-                        }
-                    } while (!isProperDoubleInput);
-
-
-                    /* Deprecated code
-                    //If user wants to edit costumer information of the order
-                    if (specificationInput == 1)
-                    {
-                        string userFirstName, userLastName, userEmail;
-                        List<string> allowed = new List<string>();
-                        bool isProperStringInput=false;
-
-                        do
-                        {
-                            try
-                            {
-                                Console.Clear();
-                                Console.WriteLine("Write a new first name for your costumer: ");
-                                userFirstName = Menu.CheckIfProperUserInput(allowed);
-
-                                Console.Clear();
-                                Console.WriteLine("Write a new last name for your costumer: ");
-                                userLastName = Menu.CheckIfProperUserInput(allowed);
-
-                                Console.Clear();
-                                Console.WriteLine("Write a new email for your costumer: ");
-                                userEmail = Menu.CheckIfProperUserInput(allowed);
-
-                                order.Customer = new Customer(userFirstName, userLastName, userEmail);
-                                isProperStringInput = true;
-
-
-                                Console.Clear();
-                                Console.WriteLine("The costumer information of Order " + order.OrderNumber + " have been changed: ");
-                                Console.WriteLine("----------------------------------------------");
-                                Console.WriteLine(order.ToString());
-                                Console.WriteLine("----------------------------------------------");
-                                
-
-
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine("Input not eglible, please try again! ");
-                                Debug.WriteLine("Error when user input new costumer information." + e.Message);
-
-                            }
-
-                        } while (!isProperStringInput);
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
 
 
 
 
 
-
-
-
-                        
-                    }
-                    */
-
-                   
-
-                        if (specificationInput == 2)
-                    {
-
-
-                        //Change products in order
-                       
-                        order.Products.Clear();
-                        Console.WriteLine("All products in your order have been deleted, please add new products with the following instructions: ");
-                        Console.WriteLine("Press any key to continue...");
-                        Console.ReadKey();
-                        AddProductToOrder(order, myStore);
+                    AddProductToOrder(order, myStore);
 
 
                         Console.Clear();
@@ -439,7 +364,7 @@ namespace BED16_BusinessSystem_v2
 
 
 
-                    }
+                    
 
 
                 }
@@ -448,7 +373,11 @@ namespace BED16_BusinessSystem_v2
 
 
 
+            if (!isOrderPickCorrect)
+            {
+                Console.WriteLine("No order by that number, please try again!");
 
+            }
 
 
             Console.WriteLine("Press any key to continue...");

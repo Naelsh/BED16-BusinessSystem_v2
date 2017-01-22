@@ -60,7 +60,19 @@ namespace BED16_BusinessSystem_v2
 
         public Product GetProduct(int listNr)
         {
-            return wareHouse[listNr];
+            if (listNr >= 0 && listNr <= 100)
+            {
+                if (wareHouse[listNr] != null)
+                {
+                    return wareHouse[listNr];
+                }
+
+                else { return null; }
+
+            }
+            else { return null; }
+
+
         }
 
 
